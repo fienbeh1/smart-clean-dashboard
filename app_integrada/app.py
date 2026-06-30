@@ -58,7 +58,7 @@ st.markdown(f"""
         font-size: 1.1rem !important;
         font-weight: 600 !important;
     }}
-    .stButton > button {{
+    .stButton > button, button[data-kind="primary"], button[data-kind="secondary"] {{
         background: {BRAND['primary']} !important;
         color: #0A192F !important;
         border: none !important;
@@ -68,7 +68,7 @@ st.markdown(f"""
         padding: 0.6rem 1.2rem !important;
         transition: all 0.2s !important;
     }}
-    .stButton > button:hover {{ background: {BRAND['primary_dark']} !important; color: #0A192F !important; }}
+    .stButton > button:hover, button[data-kind="primary"]:hover, button[data-kind="secondary"]:hover {{ background: {BRAND['primary_dark']} !important; color: #0A192F !important; }}
     .stTabs [data-baseweb="tab"] {{ font-weight: 700 !important; color: {BRAND['primary']} !important; font-size: 1.05rem !important; }}
     div[role="tabpanel"] {{ background: transparent !important; }}
     .stMetric {{
