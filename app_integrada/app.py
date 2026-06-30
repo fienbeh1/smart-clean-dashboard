@@ -37,9 +37,21 @@ st.set_page_config(page_title=f"{BRAND['name']} — {BRAND['tagline']}", layout=
 st.markdown(f"""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-    * {{ font-family: 'Inter', -apple-system, sans-serif; }}
-    .stApp {{ background: {BRAND['bg']}; }}
-    h1, h2, h3 {{ color: {BRAND['primary_dark']} !important; font-weight: 700 !important; }}
+    * {{ font-family: 'Inter', -apple-system, sans-serif !important; }}
+    .stApp, .stAppViewContainer, section[data-testid="stApp"] {{
+        background: {BRAND['bg']} !important;
+    }}
+    .main .block-container {{
+        background: {BRAND['bg']} !important;
+        padding-top: 1.5rem !important;
+    }}
+    h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {{
+        color: {BRAND['primary_dark']} !important;
+        font-weight: 700 !important;
+    }}
+    p, li, .stMarkdown p, .stMarkdown li {{
+        color: {BRAND['text']} !important;
+    }}
     .stButton > button {{
         background: {BRAND['primary']} !important;
         color: white !important;
@@ -49,13 +61,72 @@ st.markdown(f"""
         padding: 0.5rem 1rem !important;
         transition: all 0.2s !important;
     }}
-    .stButton > button:hover {{ background: {BRAND['primary_dark']} !important; transform: translateY(-1px); }}
-    .stTabs [data-baseweb="tab"] {{ font-weight: 600; }}
-    .css-1v0mbdj, .css-1r6i2wi {{ background: transparent; }}
-    .stMetric {{ background: white; padding: 1rem; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }}
+    .stButton > button:hover {{ background: {BRAND['primary_dark']} !important; }}
+    .stTabs [data-baseweb="tab"] {{ font-weight: 600 !important; color: {BRAND['primary_dark']} !important; }}
+    div[role="tabpanel"] {{ background: transparent !important; }}
+    .stMetric {{
+        background: {BRAND['card']} !important;
+        padding: 1rem !important;
+        border-radius: 12px !important;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+        border: 1px solid #E2E8F0 !important;
+    }}
+    .stMetric label, .stMetric .metric-label {{
+        color: {BRAND['muted']} !important;
+    }}
+    .stMetric .metric-value {{
+        color: {BRAND['primary_dark']} !important;
+    }}
     .stDataFrame {{ border-radius: 12px; overflow: hidden; }}
-    div[data-testid="stDecoration"] {{ background: linear-gradient(90deg, {BRAND['primary']}, {BRAND['primary_light']}); }}
-    section[data-testid="stSidebar"] {{ background: white; border-right: 1px solid #E2E8F0; }}
+    div[data-testid="stDecoration"] {{
+        background: linear-gradient(90deg, {BRAND['primary']}, {BRAND['primary_light']}) !important;
+    }}
+    section[data-testid="stSidebar"] > div:first-child {{
+        background: white !important;
+        border-right: 1px solid #E2E8F0 !important;
+    }}
+    section[data-testid="stSidebar"] .stMarkdown p {{
+        color: {BRAND['text']} !important;
+    }}
+    .row-widget.stSelectbox label, .row-widget.stNumberInput label, .row-widget.stSlider label {{
+        color: {BRAND['primary_dark']} !important;
+        font-weight: 600 !important;
+    }}
+    div[data-testid="stExpander"] {{
+        background: white !important;
+        border-radius: 12px !important;
+        border: 1px solid #E2E8F0 !important;
+        margin-bottom: 0.5rem !important;
+    }}
+    .stTabs {{
+        background: transparent !important;
+    }}
+    .st-cb, .st-c0, .st-c1, .st-c2, .st-c3, .st-c4, .st-c5, .st-c6, .st-c7, .st-c8, .st-c9 {{
+        color: {BRAND['text']} !important;
+    }}
+    hr {{
+        border-color: #E2E8F0 !important;
+    }}
+    .stAlert {{
+        background: white !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 12px !important;
+    }}
+    .stTable {{
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+    }}
+    .stTable th {{
+        background: {BRAND['primary']} !important;
+        color: white !important;
+        font-weight: 600 !important;
+    }}
+    .stTable td {{
+        background: white !important;
+        color: {BRAND['text']} !important;
+    }}
 </style>
 """, unsafe_allow_html=True)
 
