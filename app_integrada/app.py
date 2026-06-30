@@ -157,16 +157,14 @@ st.markdown(f"""
 cols = st.columns(len(ENFOQUES))
 for i, (name, meta) in enumerate(ENFOQUES.items()):
     with cols[i]:
-        selected = st.session_state.enfoque == name
-        if selected:
-            st.markdown(
-                f"<div style='background:{meta['color']};color:white;padding:8px;"
-                f"border-radius:8px;text-align:center;font-weight:bold;cursor:pointer'>"
-                f"{meta['icon']} {name}</div>",
-                unsafe_allow_html=True
-            )
-        else:
-            if st.button(f"{meta['icon']} {name}", key=f"btn_{name}", use_container_width=True):
+        is_sel = st.session_state.enfoque == name
+        if st.button(
+            f"{meta['icon']} {name}",
+            key=f"btn_{name}",
+            use_container_width=True,
+            type="primary" if is_sel else "secondary",
+        ):
+            if not is_sel:
                 st.session_state.enfoque = name
                 st.rerun()
         st.caption(meta["desc"])
