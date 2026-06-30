@@ -14,21 +14,21 @@ from shared_data import *
 BRAND = {
     "name": "Smart Clean",
     "tagline": "Análisis Financiero Inteligente",
-    "primary": "#64FFDA",
-    "primary_light": "#A7FFEB",
-    "primary_dark": "#00BFA6",
-    "accent": "#FFD700",
+    "primary": "#60A5FA",
+    "primary_light": "#93C5FD",
+    "primary_dark": "#3B82F6",
+    "accent": "#FBBF24",
     "bg": "#0A192F",
-    "card": "#112240",
-    "text": "#CCD6F6",
-    "muted": "#8892B0",
+    "card": "#1E293B",
+    "text": "#F1F5F9",
+    "muted": "#94A3B8",
 }
 
 ENFOQUES = {
     "Conservador":    {"icon": "🧮", "color": BRAND["primary"],       "desc": "Corrección de errores y supuestos conservadores"},
     "Mercado":        {"icon": "🏭", "color": BRAND["accent"],        "desc": "Benchmarks de industria de limpieza"},
     "Monte Carlo":    {"icon": "🎲", "color": BRAND["primary_light"], "desc": "Simulación probabilística con Monte Carlo"},
-    "Capital Trabajo":{"icon": "💰", "color": "#E65100",             "desc": "Ciclo de conversión de efectivo y WC"},
+    "Capital Trabajo":{"icon": "💰", "color": "#F97316",             "desc": "Ciclo de conversión de efectivo y WC"},
     "Dashboard":      {"icon": "📊", "color": BRAND["primary_dark"],  "desc": "Dashboard integral y comparativa final"},
 }
 
@@ -36,137 +36,136 @@ st.set_page_config(page_title=f"{BRAND['name']}", layout="wide")
 
 st.markdown(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     * {{ font-family: 'Inter', -apple-system, sans-serif !important; }}
     html, body, .stApp, .stAppViewContainer, section[data-testid="stApp"] {{
         background: {BRAND['bg']} !important;
         color: {BRAND['text']} !important;
-        font-size: 1.1rem !important;
+        font-size: 1rem !important;
     }}
     .main .block-container {{
         background: {BRAND['bg']} !important;
         padding-top: 1.5rem !important;
     }}
     h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {{
-        color: {BRAND['primary']} !important;
-        font-weight: 800 !important;
-        font-size: 1.6rem !important;
+        color: {BRAND['text']} !important;
+        font-weight: 700 !important;
+        font-size: 1.5rem !important;
+        letter-spacing: -0.02em !important;
     }}
-    h1 {{ font-size: 2rem !important; }}
+    h1 {{ font-size: 1.8rem !important; }}
     p, li, .stMarkdown p, .stMarkdown li {{
         color: {BRAND['text']} !important;
-        font-size: 1.1rem !important;
-        font-weight: 600 !important;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        line-height: 1.6 !important;
     }}
     .stButton > button, button[data-kind="primary"], button[data-kind="secondary"] {{
-        background: {BRAND['primary']} !important;
-        color: #0A192F !important;
+        background: {BRAND['primary_dark']} !important;
+        color: white !important;
         border: none !important;
-        border-radius: 8px !important;
-        font-weight: 700 !important;
-        font-size: 1.05rem !important;
-        padding: 0.6rem 1.2rem !important;
-        transition: all 0.2s !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.15s !important;
     }}
-    .stButton > button:hover, button[data-kind="primary"]:hover, button[data-kind="secondary"]:hover {{ background: {BRAND['primary_dark']} !important; color: #0A192F !important; }}
-    .stTabs [data-baseweb="tab"] {{ font-weight: 700 !important; color: {BRAND['primary']} !important; font-size: 1.05rem !important; }}
+    .stButton > button:hover, button[data-kind="primary"]:hover, button[data-kind="secondary"]:hover {{ background: #2563EB !important; color: white !important; }}
+    .stTabs [data-baseweb="tab"] {{ font-weight: 600 !important; color: {BRAND['muted']} !important; font-size: 0.95rem !important; }}
+    .stTabs [data-baseweb="tab"][aria-selected="true"] {{ color: {BRAND['primary']} !important; border-bottom-color: {BRAND['primary']} !important; }}
     div[role="tabpanel"] {{ background: transparent !important; }}
     .stMetric {{
         background: {BRAND['card']} !important;
-        padding: 1.2rem !important;
-        border-radius: 12px !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-        border: 1px solid #1E3A5F !important;
+        padding: 1rem !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(148,163,184,0.15) !important;
     }}
     .stMetric label, .stMetric .metric-label {{
         color: {BRAND['muted']} !important;
-        font-size: 1rem !important;
+        font-size: 0.85rem !important;
         font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.03em !important;
     }}
     .stMetric .metric-value {{
-        color: {BRAND['primary']} !important;
-        font-size: 1.3rem !important;
-        font-weight: 800 !important;
+        color: {BRAND['text']} !important;
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
     }}
-    .stDataFrame {{ border-radius: 12px; overflow: hidden; }}
+    .stDataFrame {{ border-radius: 8px; overflow: hidden; }}
     div[data-testid="stDecoration"] {{
-        background: linear-gradient(90deg, {BRAND['primary']}, {BRAND['primary_light']}) !important;
+        background: linear-gradient(90deg, {BRAND['primary_dark']}, {BRAND['primary']}) !important;
+        height: 3px !important;
     }}
     section[data-testid="stSidebar"] > div:first-child {{
         background: {BRAND['card']} !important;
-        border-right: 1px solid #1E3A5F !important;
+        border-right: 1px solid rgba(148,163,184,0.15) !important;
     }}
     section[data-testid="stSidebar"] .stMarkdown p {{
         color: {BRAND['text']} !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
     }}
     .row-widget.stSelectbox label, .row-widget.stNumberInput label, .row-widget.stSlider label {{
-        color: {BRAND['primary']} !important;
-        font-weight: 700 !important;
-        font-size: 1.05rem !important;
+        color: {BRAND['muted']} !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.02em !important;
     }}
     .stSelectbox div[data-baseweb="select"] span, .stNumberInput input, .stSlider div[data-baseweb="slider"] {{
-        font-size: 1.05rem !important;
+        font-size: 0.95rem !important;
     }}
     div[data-testid="stExpander"] {{
         background: {BRAND['card']} !important;
-        border-radius: 12px !important;
-        border: 1px solid #1E3A5F !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(148,163,184,0.15) !important;
         margin-bottom: 0.5rem !important;
     }}
     div[data-testid="stExpander"] summary {{
-        font-weight: 700 !important;
-        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
     }}
     .stTabs {{
         background: transparent !important;
     }}
     .stAlert {{
         background: {BRAND['card']} !important;
-        border: 1px solid #1E3A5F !important;
-        border-radius: 12px !important;
+        border: 1px solid rgba(148,163,184,0.15) !important;
+        border-radius: 8px !important;
         color: {BRAND['text']} !important;
-        font-size: 1.05rem !important;
-        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
     }}
-    .stTable {{
-        border-collapse: separate;
-        border-spacing: 0;
-        border-radius: 12px;
-        overflow: hidden;
-    }}
+    .stTable {{ border-radius: 8px; overflow: hidden; }}
     .stTable th {{
         background: {BRAND['primary_dark']} !important;
-        color: #0A192F !important;
-        font-weight: 700 !important;
-        font-size: 1rem !important;
+        color: white !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
     }}
     .stTable td {{
         background: {BRAND['card']} !important;
         color: {BRAND['text']} !important;
-        font-size: 1rem !important;
-        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
     }}
     .stCheckbox label, .stRadio label {{
-        font-size: 1.05rem !important;
-        font-weight: 600 !important;
-        color: {BRAND['text']} !important;
-    }}
-    .st-br, .st-bv, .st-bw, .st-bx, .st-by, .st-bz {{
+        font-size: 0.95rem !important;
+        font-weight: 500 !important;
         color: {BRAND['text']} !important;
     }}
     hr {{
-        border-color: #1E3A5F !important;
-        border-width: 2px !important;
+        border-color: rgba(148,163,184,0.15) !important;
+        border-width: 1px !important;
     }}
     caption, .stCaption, .stMarkdown caption {{
         color: {BRAND['muted']} !important;
-        font-size: 1rem !important;
-        font-weight: 600 !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
     }}
     .stDataFrame div[data-testid="StyledDataFrameDataCell"] {{
-        font-size: 1rem !important;
-        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
     }}
     .stProgress > div > div > div > div {{
         background-color: {BRAND['primary']} !important;
@@ -176,37 +175,47 @@ st.markdown(f"""
         border-color: {BRAND['primary_dark']} !important;
     }}
     div[data-testid="stSuccess"] {{
-        background: #0B2D26 !important;
+        background: #0F1D2E !important;
         border-color: {BRAND['primary']} !important;
     }}
     div[data-testid="stWarning"] {{
-        background: #2D1F0B !important;
+        background: #1E1A0B !important;
         border-color: {BRAND['accent']} !important;
     }}
     div[data-testid="stError"] {{
-        background: #2D0B0B !important;
-        border-color: #FF5252 !important;
-    }}
-    .st-bq, .st-br, .st-bs, .st-bt, .st-bu, .st-bv, .st-bw, .st-bx, .st-by, .st-bz,
-    .st-c0, .st-c1, .st-c2, .st-c3, .st-c4, .st-c5, .st-c6, .st-c7, .st-c8, .st-c9,
-    .st-ca, .st-cb, .st-cc {{
-        color: {BRAND['text']} !important;
+        background: #1E0B0B !important;
+        border-color: #EF4444 !important;
     }}
     .stSelectbox div[data-baseweb="select"] {{
         background-color: {BRAND['card']} !important;
-        border-color: #1E3A5F !important;
+        border-color: rgba(148,163,184,0.25) !important;
     }}
-    .stSlider div[data-baseweb="slider"] div {{
-        background-color: {BRAND['primary']} !important;
+    .stSlider div[data-baseweb="slider"] > div > div {{
+        background: {BRAND['primary_dark']} !important;
+    }}
+    .stSlider div[data-baseweb="slider"] > div > div > div {{
+        background: {BRAND['primary']} !important;
+        border: 2px solid {BRAND['primary_dark']} !important;
     }}
     div.stMarkdown div[data-testid="stMarkdownContainer"] p {{
-        font-size: 1.1rem !important;
-        font-weight: 600 !important;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
     }}
     .st-caption, .stCaption, div[data-testid="stCaption"] {{
-        font-size: 1rem !important;
-        font-weight: 600 !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
         color: {BRAND['muted']} !important;
+    }}
+    .stNumberInput input {{
+        background-color: {BRAND['card']} !important;
+        color: {BRAND['text']} !important;
+        border-color: rgba(148,163,184,0.25) !important;
+    }}
+    div[data-testid="column"] {{
+        gap: 0.75rem !important;
+    }}
+    .element-container .st-emotion-cache-1wivap2, .st-emotion-cache-1wivap2 {{
+        background: {BRAND['card']} !important;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -217,14 +226,14 @@ if "enfoque" not in st.session_state:
 # ── Brand Header ────────────────────────────────────────────
 st.markdown(f"""
 <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem">
-    <div style="background:linear-gradient(135deg,{BRAND['primary']},{BRAND['primary_dark']});
-                width:55px;height:55px;border-radius:14px;
+    <div style="background:linear-gradient(135deg,{BRAND['primary_dark']},{BRAND['primary']});
+                width:45px;height:45px;border-radius:10px;
                 display:flex;align-items:center;justify-content:center;
-                font-size:1.6rem;color:#0A192F;font-weight:900;box-shadow:0 2px 12px rgba(100,255,218,0.3)">
+                font-size:1.3rem;color:white;font-weight:800;box-shadow:0 2px 8px rgba(59,130,246,0.3)">
         SC
     </div>
     <div>
-        <h1 style="margin:0;font-size:2rem;letter-spacing:-0.5px">
+        <h1 style="margin:0;font-size:1.6rem;letter-spacing:-0.5px;color:{BRAND['text']}">
             {BRAND['name']}
         </h1>
     </div>
