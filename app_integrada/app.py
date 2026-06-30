@@ -14,14 +14,14 @@ from shared_data import *
 BRAND = {
     "name": "Smart Clean",
     "tagline": "Análisis Financiero Inteligente",
-    "primary": "#00897B",
-    "primary_light": "#4DB6AC",
-    "primary_dark": "#004D40",
-    "accent": "#FF8F00",
-    "bg": "#F5FBF9",
-    "card": "#FFFFFF",
-    "text": "#1A202C",
-    "muted": "#607D8B",
+    "primary": "#64FFDA",
+    "primary_light": "#A7FFEB",
+    "primary_dark": "#00BFA6",
+    "accent": "#FFD700",
+    "bg": "#0A192F",
+    "card": "#112240",
+    "text": "#CCD6F6",
+    "muted": "#8892B0",
 }
 
 ENFOQUES = {
@@ -32,85 +32,102 @@ ENFOQUES = {
     "Dashboard":      {"icon": "📊", "color": BRAND["primary_dark"],  "desc": "Dashboard integral y comparativa final"},
 }
 
-st.set_page_config(page_title=f"{BRAND['name']} — {BRAND['tagline']}", layout="wide")
+st.set_page_config(page_title=f"{BRAND['name']}", layout="wide")
 
 st.markdown(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
     * {{ font-family: 'Inter', -apple-system, sans-serif !important; }}
-    .stApp, .stAppViewContainer, section[data-testid="stApp"] {{
+    html, body, .stApp, .stAppViewContainer, section[data-testid="stApp"] {{
         background: {BRAND['bg']} !important;
+        color: {BRAND['text']} !important;
+        font-size: 1.1rem !important;
     }}
     .main .block-container {{
         background: {BRAND['bg']} !important;
         padding-top: 1.5rem !important;
     }}
     h1, h2, h3, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {{
-        color: {BRAND['primary_dark']} !important;
-        font-weight: 700 !important;
+        color: {BRAND['primary']} !important;
+        font-weight: 800 !important;
+        font-size: 1.6rem !important;
     }}
+    h1 {{ font-size: 2rem !important; }}
     p, li, .stMarkdown p, .stMarkdown li {{
         color: {BRAND['text']} !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
     }}
     .stButton > button {{
         background: {BRAND['primary']} !important;
-        color: white !important;
+        color: #0A192F !important;
         border: none !important;
         border-radius: 8px !important;
-        font-weight: 600 !important;
-        padding: 0.5rem 1rem !important;
+        font-weight: 700 !important;
+        font-size: 1.05rem !important;
+        padding: 0.6rem 1.2rem !important;
         transition: all 0.2s !important;
     }}
-    .stButton > button:hover {{ background: {BRAND['primary_dark']} !important; }}
-    .stTabs [data-baseweb="tab"] {{ font-weight: 600 !important; color: {BRAND['primary_dark']} !important; }}
+    .stButton > button:hover {{ background: {BRAND['primary_dark']} !important; color: #0A192F !important; }}
+    .stTabs [data-baseweb="tab"] {{ font-weight: 700 !important; color: {BRAND['primary']} !important; font-size: 1.05rem !important; }}
     div[role="tabpanel"] {{ background: transparent !important; }}
     .stMetric {{
         background: {BRAND['card']} !important;
-        padding: 1rem !important;
+        padding: 1.2rem !important;
         border-radius: 12px !important;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
-        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+        border: 1px solid #1E3A5F !important;
     }}
     .stMetric label, .stMetric .metric-label {{
         color: {BRAND['muted']} !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
     }}
     .stMetric .metric-value {{
-        color: {BRAND['primary_dark']} !important;
+        color: {BRAND['primary']} !important;
+        font-size: 1.3rem !important;
+        font-weight: 800 !important;
     }}
     .stDataFrame {{ border-radius: 12px; overflow: hidden; }}
     div[data-testid="stDecoration"] {{
         background: linear-gradient(90deg, {BRAND['primary']}, {BRAND['primary_light']}) !important;
     }}
     section[data-testid="stSidebar"] > div:first-child {{
-        background: white !important;
-        border-right: 1px solid #E2E8F0 !important;
+        background: {BRAND['card']} !important;
+        border-right: 1px solid #1E3A5F !important;
     }}
     section[data-testid="stSidebar"] .stMarkdown p {{
         color: {BRAND['text']} !important;
-    }}
-    .row-widget.stSelectbox label, .row-widget.stNumberInput label, .row-widget.stSlider label {{
-        color: {BRAND['primary_dark']} !important;
         font-weight: 600 !important;
     }}
+    .row-widget.stSelectbox label, .row-widget.stNumberInput label, .row-widget.stSlider label {{
+        color: {BRAND['primary']} !important;
+        font-weight: 700 !important;
+        font-size: 1.05rem !important;
+    }}
+    .stSelectbox div[data-baseweb="select"] span, .stNumberInput input, .stSlider div[data-baseweb="slider"] {{
+        font-size: 1.05rem !important;
+    }}
     div[data-testid="stExpander"] {{
-        background: white !important;
+        background: {BRAND['card']} !important;
         border-radius: 12px !important;
-        border: 1px solid #E2E8F0 !important;
+        border: 1px solid #1E3A5F !important;
         margin-bottom: 0.5rem !important;
+    }}
+    div[data-testid="stExpander"] summary {{
+        font-weight: 700 !important;
+        font-size: 1.1rem !important;
     }}
     .stTabs {{
         background: transparent !important;
     }}
-    .st-cb, .st-c0, .st-c1, .st-c2, .st-c3, .st-c4, .st-c5, .st-c6, .st-c7, .st-c8, .st-c9 {{
-        color: {BRAND['text']} !important;
-    }}
-    hr {{
-        border-color: #E2E8F0 !important;
-    }}
     .stAlert {{
-        background: white !important;
-        border: 1px solid #E2E8F0 !important;
+        background: {BRAND['card']} !important;
+        border: 1px solid #1E3A5F !important;
         border-radius: 12px !important;
+        color: {BRAND['text']} !important;
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
     }}
     .stTable {{
         border-collapse: separate;
@@ -119,13 +136,77 @@ st.markdown(f"""
         overflow: hidden;
     }}
     .stTable th {{
-        background: {BRAND['primary']} !important;
-        color: white !important;
-        font-weight: 600 !important;
+        background: {BRAND['primary_dark']} !important;
+        color: #0A192F !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
     }}
     .stTable td {{
-        background: white !important;
+        background: {BRAND['card']} !important;
         color: {BRAND['text']} !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+    }}
+    .stCheckbox label, .stRadio label {{
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        color: {BRAND['text']} !important;
+    }}
+    .st-br, .st-bv, .st-bw, .st-bx, .st-by, .st-bz {{
+        color: {BRAND['text']} !important;
+    }}
+    hr {{
+        border-color: #1E3A5F !important;
+        border-width: 2px !important;
+    }}
+    caption, .stCaption, .stMarkdown caption {{
+        color: {BRAND['muted']} !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+    }}
+    .stDataFrame div[data-testid="StyledDataFrameDataCell"] {{
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+    }}
+    .stProgress > div > div > div > div {{
+        background-color: {BRAND['primary']} !important;
+    }}
+    div[data-testid="stInfo"] {{
+        background: {BRAND['card']} !important;
+        border-color: {BRAND['primary_dark']} !important;
+    }}
+    div[data-testid="stSuccess"] {{
+        background: #0B2D26 !important;
+        border-color: {BRAND['primary']} !important;
+    }}
+    div[data-testid="stWarning"] {{
+        background: #2D1F0B !important;
+        border-color: {BRAND['accent']} !important;
+    }}
+    div[data-testid="stError"] {{
+        background: #2D0B0B !important;
+        border-color: #FF5252 !important;
+    }}
+    .st-bq, .st-br, .st-bs, .st-bt, .st-bu, .st-bv, .st-bw, .st-bx, .st-by, .st-bz,
+    .st-c0, .st-c1, .st-c2, .st-c3, .st-c4, .st-c5, .st-c6, .st-c7, .st-c8, .st-c9,
+    .st-ca, .st-cb, .st-cc {{
+        color: {BRAND['text']} !important;
+    }}
+    .stSelectbox div[data-baseweb="select"] {{
+        background-color: {BRAND['card']} !important;
+        border-color: #1E3A5F !important;
+    }}
+    .stSlider div[data-baseweb="slider"] div {{
+        background-color: {BRAND['primary']} !important;
+    }}
+    div.stMarkdown div[data-testid="stMarkdownContainer"] p {{
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+    }}
+    .st-caption, .stCaption, div[data-testid="stCaption"] {{
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        color: {BRAND['muted']} !important;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -137,19 +218,15 @@ if "enfoque" not in st.session_state:
 st.markdown(f"""
 <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem">
     <div style="background:linear-gradient(135deg,{BRAND['primary']},{BRAND['primary_dark']});
-                width:50px;height:50px;border-radius:12px;
+                width:55px;height:55px;border-radius:14px;
                 display:flex;align-items:center;justify-content:center;
-                font-size:1.5rem;color:white;font-weight:800;box-shadow:0 2px 8px rgba(0,137,123,0.3)">
+                font-size:1.6rem;color:#0A192F;font-weight:900;box-shadow:0 2px 12px rgba(100,255,218,0.3)">
         SC
     </div>
     <div>
-        <h1 style="margin:0;font-size:1.8rem;letter-spacing:-0.5px">
+        <h1 style="margin:0;font-size:2rem;letter-spacing:-0.5px">
             {BRAND['name']}
-            <span style="color:{BRAND['primary']};font-weight:300;font-size:1.2rem">| {BRAND['tagline']}</span>
         </h1>
-        <p style="color:{BRAND['muted']};margin:0;font-size:0.9rem">
-            Análisis Financiero Integral — 5 enfoques metodológicos en una sola vista
-        </p>
     </div>
 </div>
 """, unsafe_allow_html=True)
