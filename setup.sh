@@ -1,8 +1,8 @@
 mkdir -p ~/.streamlit/
-cat > ~/.streamlit/config.toml << 'CONF'
+cat > ~/.streamlit/config.toml << CONF
 [server]
 headless = true
-port = "${PORT}"
+port = ${PORT}
 enableCORS = false
 enableXsrfProtection = false
 
