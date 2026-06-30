@@ -317,22 +317,51 @@ if st.session_state.enfoque == "Conservador":
         col2.metric("PE Original (L/mes)", f"{be['be_units']*2.09:,.0f}")
         col3.metric("Producción Real (L/mes)", f"{vol/12:,.0f}")
         col4.metric("Margen Seguridad", f"{be['margin_safety']:.1f}%")
-        fig = go.Figure()
-        meses = list(range(1, 13))
-        ing_mensual = ventas / 12
+        st.markdown(f"""
+**Fórmula:** PE = CF ÷ (PVU − CVU) = ${be['cf_mensual']:,.0f} ÷ (${be['pvu_prom']:.2f} − ${be['cvu_prom']:.2f}) = **{be['be_units']:,.0f} L/mes**
+""")
+        max_q = int(vol / 12 * 1.5)
+        q = list(range(0, max_q + 1, max(1, max_q // 100)))
+        pvu = be['pvu_prom']
+        cvu = be['cvu_prom']
         cf_m = be['cf_mensual']
-        cv_m = be['cvu_prom'] * (vol / 12)
-        cost_total_m = cf_m + cv_m
-        fig.add_trace(go.Scatter(x=meses, y=[ing_mensual]*12, mode='lines+markers',
-                                 name='Ingresos', line=dict(color='green', width=3)))
-        fig.add_trace(go.Scatter(x=meses, y=[cost_total_m]*12, mode='lines+markers',
-                                 name='Costos Totales', line=dict(color='red', width=3)))
-        fig.add_trace(go.Scatter(x=meses, y=[cf_m]*12, mode='lines',
-                                 name='Costos Fijos', line=dict(color='orange', width=2, dash='dash')))
-        fig.add_hline(y=be['be_revenue'], line_dash="dot", line_color="purple",
-                      annotation_text=f"PE: ${be['be_revenue']:,.0f}")
-        fig.update_layout(title="Punto de Equilibrio Mensual", yaxis_title="$",
-                          xaxis_title="Mes", height=400)
+        revenue = [pvu * x for x in q]
+        total_cost = [cf_m + cvu * x for x in q]
+        fixed_cost = [cf_m] * len(q)
+        be_q = be['be_units']
+        be_r = be['be_revenue']
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=q, y=revenue, mode='lines',
+            name='Ingresos', line=dict(color='#3B82F6', width=3)))
+        fig.add_trace(go.Scatter(x=q, y=total_cost, mode='lines',
+            name='Costo Total', line=dict(color='#EF4444', width=3)))
+        fig.add_trace(go.Scatter(x=q, y=fixed_cost, mode='lines',
+            name='Costo Fijo', line=dict(color='#F59E0B', width=2, dash='dash')))
+        q_profit = [x for x in q if x >= be_q]
+        q_loss = [x for x in q if x <= be_q]
+        fig.add_trace(go.Scatter(x=q_loss + q_loss[::-1],
+            y=[pvu * x for x in q_loss] + [cf_m + cvu * x for x in q_loss[::-1]],
+            fill='toself', fillcolor='rgba(239,68,68,0.2)', line=dict(width=0),
+            name='Pérdida', showlegend=True))
+        fig.add_trace(go.Scatter(x=q_profit + q_profit[::-1],
+            y=[pvu * x for x in q_profit] + [cf_m + cvu * x for x in q_profit[::-1]],
+            fill='toself', fillcolor='rgba(34,197,94,0.2)', line=dict(width=0),
+            name='Ganancia', showlegend=True))
+        fig.add_vline(x=be_q, line_dash='dot', line_color='white', line_width=2,
+            annotation_text=f'PE: {be_q:,.0f} L', annotation_position='top')
+        fig.add_hline(y=be_r, line_dash='dot', line_color='white', line_width=1, opacity=0.5)
+        fig.update_layout(
+            title='Gráfico de Punto de Equilibrio',
+            xaxis_title='Volumen (L/mes)',
+            yaxis_title='$',
+            height=450,
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font=dict(color='#F1F5F9'),
+            xaxis=dict(gridcolor='rgba(148,163,184,0.15)'),
+            yaxis=dict(gridcolor='rgba(148,163,184,0.15)'),
+            legend=dict(orientation='h', y=1.1),
+        )
         st.plotly_chart(fig, use_container_width=True)
         st.subheader("Margen de Contribución por Producto (Corregido)")
         mc_data = []
@@ -1067,6 +1096,24 @@ elif st.session_state.enfoque == "Dashboard":
         col2.metric("PE ($/mes)", f"${be['be_revenue']:,.0f}")
         col3.metric("% Capacidad", f"{be['be_pct_capacity']:.1f}%")
         col4.metric("Margen Seguridad", f"{be['margin_safety']:.1f}%")
+        st.markdown(f"""
+**Fórmula:** PE = CF ÷ (PVU − CVU) = ${be['cf_mensual']:,.0f} ÷ (${be['pvu_prom']:.2f} − ${be['cvu_prom']:.2f}) = **{be['be_units']:,.0f} L/mes**
+""")
+        max_q = int(get_volume_liters(anio) / 12 * 1.5)
+        q = list(range(0, max_q + 1, max(1, max_q // 100)))
+        pvu = be['pvu_prom']; cvu = be['cvu_prom']; cf_m = be['cf_mensual']
+        be_q = be['be_units']; be_r = be['be_revenue']
+        fig_be = go.Figure()
+        fig_be.add_trace(go.Scatter(x=q, y=[pvu*x for x in q], mode='lines', name='Ingresos', line=dict(color='#3B82F6', width=3)))
+        fig_be.add_trace(go.Scatter(x=q, y=[cf_m + cvu*x for x in q], mode='lines', name='Costo Total', line=dict(color='#EF4444', width=3)))
+        fig_be.add_trace(go.Scatter(x=q, y=[cf_m]*len(q), mode='lines', name='Costo Fijo', line=dict(color='#F59E0B', width=2, dash='dash')))
+        q_loss = [x for x in q if x <= be_q]
+        q_profit = [x for x in q if x >= be_q]
+        fig_be.add_trace(go.Scatter(x=q_loss + q_loss[::-1], y=[pvu*x for x in q_loss] + [cf_m + cvu*x for x in q_loss[::-1]], fill='toself', fillcolor='rgba(239,68,68,0.2)', line=dict(width=0), name='Pérdida'))
+        fig_be.add_trace(go.Scatter(x=q_profit + q_profit[::-1], y=[pvu*x for x in q_profit] + [cf_m + cvu*x for x in q_profit[::-1]], fill='toself', fillcolor='rgba(34,197,94,0.2)', line=dict(width=0), name='Ganancia'))
+        fig_be.add_vline(x=be_q, line_dash='dot', line_color='white', line_width=2, annotation_text=f'PE: {be_q:,.0f} L', annotation_position='top')
+        fig_be.update_layout(title='Gráfico de Punto de Equilibrio', xaxis_title='Volumen (L/mes)', yaxis_title='$', height=400, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', font=dict(color='#F1F5F9'), xaxis=dict(gridcolor='rgba(148,163,184,0.15)'), yaxis=dict(gridcolor='rgba(148,163,184,0.15)'), legend=dict(orientation='h', y=1.1))
+        st.plotly_chart(fig_be, use_container_width=True)
         st.subheader("Estructura de Costos Variables por Producto")
         prod_data = []
         for p in PVU:
