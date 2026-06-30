@@ -217,6 +217,11 @@ st.markdown(f"""
     .element-container .st-emotion-cache-1wivap2, .st-emotion-cache-1wivap2 {{
         background: {BRAND['card']} !important;
     }}
+    div[data-testid="stText"], .stText, div[data-testid="stText"] p {{
+        color: {BRAND['text']} !important;
+        font-weight: 500 !important;
+        font-size: 1rem !important;
+    }}
 </style>
 """, unsafe_allow_html=True)
 
