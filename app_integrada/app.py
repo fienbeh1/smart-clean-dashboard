@@ -294,7 +294,7 @@ if st.session_state.enfoque == "Conservador":
 
     with tab2:
         st.header("Punto de Equilibrio Real")
-        anio = st.selectbox("Año", [1, 2, 3, 4, 5], key="be_anio_cons")
+        anio = st.slider("Año", 1, 5, 1, key="be_anio_cons")
         be = calc_break_even(anio, CVU_ORIG, True)
         ventas = get_sales(anio)
         vol = get_volume_liters(anio)
@@ -1045,7 +1045,7 @@ elif st.session_state.enfoque == "Dashboard":
 
     with tab2:
         st.header("Punto de Equilibrio y Costos Reales")
-        anio = st.selectbox("Año", [1, 2, 3, 4, 5], key="be_anio_dash")
+        anio = st.slider("Año", 1, 5, 1, key="be_anio_dash")
         incluir_ga = st.checkbox("Incluir gastos reales (G&A, seguros, etc.)", True, key="be_ga_dash")
         be = calc_break_even(anio, CVU_ORIG, incluir_ga)
         col1, col2, col3, col4 = st.columns(4)
